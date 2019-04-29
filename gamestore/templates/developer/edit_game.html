@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Edit game{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-3">Edit game</h2>
+<form method="post">{% csrf_token %}
+    {% for field in form %}
+        {% include 'extra/game_field.html' %}
+    {% endfor %}
+    <hr class="mb-3">
+    <div class="form-group row">
+        <div class="col-5"></div>
+        <div class="col-7">
+          <button name="deletegame" type="submit" class="btn btn-danger ">Delete game</button>
+          <button name="updategame" type="submit" class="btn btn-primary float-right">Update game</button>
+        </div>
+    </div>
+  </form>
+
+
+{% endblock %}

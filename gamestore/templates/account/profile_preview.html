@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}{{user_info.username}} profile{% endblock %}
+
+{% block content %}
+
+<br />
+<div class="card">
+    <div class="row">
+		<aside class="col-sm-5">
+        <article class="card">
+            <div>
+                {% if userprofile.photo_url and user_info.is_active%}
+                    <img class="card-img-top" src="{{ userprofile.photo_url }}" alt="Profile Picture">
+                {% else %}
+                    <img class="card-img-top" src="{% static 'images/default_pic.png' %}" alt="Default Profile Picture">
+                {% endif %}
+            </div>
+        </article>
+        </aside>
+        <aside class="col-sm-7">
+        <article class="card-body p-5">
+                <h4 class="title">{{user_info.username}}</h4>
+                <hr>
+                {% if user_info.is_active %}
+                    {% if userprofile.city or userprofile.country %}
+                        <small class="text-info"><cite><i class="fas fa-map-marker-alt"></i> {{userprofile.city}} {{userprofile.country}}</cite></small>
+                    {% endif %}
+                    
+                    <div>
+                        <i class="fas fa-user-circle mb-3"></i> {{user_info.first_name}} {{user_info.last_name}}<br />
+                        <i class="fas fa-envelope mb-3"></i> {{user_info.email}}<br />
+                        <i class="fas fa-user mb-3"></i> {{userprofile.get_gender_display}}<br />
+                        <i class="fas fa-gift mb-3"></i> {{userprofile.birth_date}}<br />
+                        {% if userprofile.bio %}
+                            <i class="fas fa-graduation-cap"></i> {{userprofile.bio}}
+                        {% endif %}
+                    </div>
+                    
+                {% else %}
+                    <p>User account is deleted</p>
+                {% endif %}
+        </article>
+        </aside>
+    </div>
+</div>
+
+
+{% endblock %}

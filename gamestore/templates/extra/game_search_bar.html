@@ -1,0 +1,30 @@
+{% load staticfiles %}
+
+<form method="post">{% csrf_token %}
+    <div class="row mb-3">
+        <div class="col-12">
+            {{ form.search_key }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-4 col-sm-4">
+            <span class="text-muted">
+                {{ form.category.label }}
+            </span>
+            <span class="col-3 mr-4">
+                {{ form.category }}
+            </span>
+        </div>
+        <div class="col-4 col-sm-4">
+            <span class="text-muted">
+                {{ form.sort_type.label }}
+            </span>
+            <span class="col-3 mr-5">
+                {{ form.sort_type }}
+            </span>
+        </div>
+        <div class="col-4 col-sm-4">
+            <button class="btn btn-primary search-game" name="searchgame" type="submit">Search</button>
+        </div>
+    </div>
+</form>

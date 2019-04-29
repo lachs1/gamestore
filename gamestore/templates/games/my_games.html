@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}My games{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-3">My games</h2>
+
+{% include 'extra/game_search_bar.html' %}
+
+{% include 'games/games_list.html' %}
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Add game{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-3">Add game</h2>
+<form method="post">{% csrf_token %}
+    {% for field in form %}
+        {% include 'extra/game_field.html' %}
+    {% endfor %}
+    <hr class="mb-3">
+    <div class="row">
+      <div class="col-md-6 offset-md-5">
+        <button type="submit" class="btn btn-primary btn-block">Upload game</button>
+      </div>
+    </div>
+  </form>
+
+
+{% endblock %}

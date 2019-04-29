@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Uploaded games{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-3">Uploaded games</h2>
+
+{% include 'extra/game_search_bar.html' %}
+
+{% include 'games/games_list.html' %}
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-3">Your profile</h2>
+<br>
+<p><strong>Look how users see your profile <a href="/user/{{ user.id }}">here</a></strong></p>
+
+<form method="post">{% csrf_token %}
+    {% for field in userform %}
+        {% include 'extra/profile_field.html' %}
+    {% endfor %}
+    {% for field in profileform %}
+        {% include 'extra/profile_field.html' %}
+    {% endfor %}
+    <div class="form-group row">
+        <div class="col-5"></div>
+        <div class="col-7">
+            <button name="deleteuser" type="submit" class="btn btn-danger ">Delete account</button>
+            <button name="updateprofile" type="submit" class="btn btn-primary float-right">Update My Profile</button>
+        </div>
+    </div>
+</form>
+<br>
+<br>
+<h2>Change your password</h2>
+<form method="post">{% csrf_token %}
+    {% for field in changepasswordform %}
+        {% include 'extra/profile_field.html' %}
+    {% endfor %}
+    <div class="form-group row">
+        <div class="col-12">
+            <button name="changepassword" type="submit" class="btn btn-primary float-right">Change My Password</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

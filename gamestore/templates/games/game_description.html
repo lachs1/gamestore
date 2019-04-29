@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}{{ game.name }} {% endblock %}
+
+{% block meta_description %}{{ game.description }}{% endblock %}
+{% block meta_title %}{{ game.name }}{% endblock %}
+{% block meta_image %}{{ game.picture_url }}{% endblock %}
+
+{% block twitter_image %}{{ game.picture_url }}{% endblock %}
+{% block twitter_title %}{{ game.name }}{% endblock %}
+{% block twitter_description %}{{ game.description }}{% endblock %}
+
+{% block content %}
+
+<div class="card">
+	<div class="row">
+		<aside class="col-sm-5 border-right">
+<article class="gallery-wrap"> 
+  <div> 
+  {% if not game.picture_url %}
+    <img class="card-img-top" src="{% static 'images/default_pic.png' %}" alt="Default Game Picture">
+  {% else %}
+    <img class="card-img-top" src="{{ game.picture_url }}" alt="Game Picture">
+  {% endif %}
+  </div>
+</article> 
+<article class="card-body p-5">
+  <div>
+    <div class="social-media">
+      <div>
+          <strong>Share this game!</strong>
+      </div>
+      <div>
+       <!-- Twitter -->
+      <a href="http://twitter.com/share?url={{ request.build_absolute_uri }}&text=Play%20this%20awesome%20game:&via=wsdgamestore" target="_blank" class="share-btn twitter">
+          <i class="fab fa-twitter-square"></i>
+      </a>
+      <!-- Reddit -->
+      <a href="http://reddit.com/submit?url={{ request.build_absolute_uri }}&amp;title=Play%20this%20awesome%20game!" target="_blank">
+          <i class="fab fa-reddit-square"></i>
+      </a>
+      <!-- Facebook -->
+      <a href="http://www.facebook.com/sharer.php?u={{ request.build_absolute_uri }}" target="_blank">
+          <i class="fab fa-facebook"></i>
+      </a>
+      <!-- Email -->
+      <a href="mailto:?subject=Play%20this%20awesome%20game!&body=Play%20this%20awesome%20game%20at:%20{{ request.build_absolute_uri}}" class="share-btn email">
+          <i class="fa fa-envelope"></i>
+      </a>
+      </div>
+    </div>
+      <h5 class="title mb-3">Best scores</h5>
+    <table style="width:100%">
+      {% for score in scores %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td><a href="/user/{{ score.scorer.user.id }}">{{ score.scorer.user.username }}</a></td>
+            <td>{{ score.value }}</td>
+          </tr>
+      {% endfor %}
+    </table>
+   </div>
+</article>
+		</aside>
+		<aside class="col-sm-7">
+<article class="card-body p-5">
+	<h3 class="title mb-3">{{ game.name }}</h3>
+<p>
+	<span class="price h4 text-warning"> 
+		<span class="num">{{ game.price }} &euro;</span>
+	</span> 
+</p>
+<dl>
+  {% if game.description %}
+    <dt>Description</dt>
+    <dd><p>{{ game.description }}</p></dd>
+  {% endif %}
+</dl>
+<hr>
+<dl>
+  <dt>Category</dt>
+  <dd><a href="/search_game">{{ game.get_category_display }}</a></dd>
+</dl>
+<dl>
+  <dt>Age limit</dt>
+  <dd>{{ game.age_limit }}+</dd>
+</dl>
+<dl>
+  <dt>Developer</dt>
+  <dd><a href="/user/{{ game.developer.user.id }}">{{ game.developer.user.username }}</a></dd>
+</dl>
+
+<hr>
+<form method="post">{% csrf_token %}
+  {% if owner or purchased_game %}
+    <a href="/play_game/{{game.id}}" class="btn btn-primary btn-block text-uppercase">Play</a>
+    {% if owner %}
+        <a class="btn btn-outline-primary btn-block" href="/edit_game/{{game.id}}" role="button">Edit game</a>
+    {% endif %}
+  {% else %}
+	<a href="/buy_game/{{game.id}}" class="btn btn-primary text-uppercase"><i class="fas fa-shopping-cart"></i> Buy now </a>
+    {% if saved_game or anonym %}
+        <button class="btn btn-outline-primary btn-secondary" disabled> <i class="far fa-bookmark"></i> Save to wishlist </button>
+    {% else %}
+        <button name="wishlist" type="submit" class="btn btn-outline-primary"> <i class="far fa-bookmark"></i> Save to wishlist </button>
+    {% endif %}
+  {% endif %}
+</form>
+</article> <!-- card-body.// -->
+		</aside> <!-- col.// -->
+	</div> <!-- row.// -->
+</div> <!-- card.// -->
+
+{% endblock %}

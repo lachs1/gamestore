@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-3">Login with Facebook</h2>
+<div class="row md-7">
+    <div class="col-md-5">  
+        <div class="text-center social-btn">
+            <a class="btn btn-primary btn-block " href="{% url 'social:begin' 'facebook' %}">
+                <i class="fab fa-facebook-square"></i>&nbsp; Login with Facebook
+            </a>
+        </div>
+    </div>
+</div>
+<br>
+
+<h2 class="mb-3">Login</h2>
+<form method="post">{% csrf_token %}
+  {% if errors %}
+      <small style="color:red">
+        {{ errors }}
+      </small>
+      <small style="color:red">Please, try again!</small>
+    {% endif %}
+  <div class="mb-3">
+      <label for="username">Username</label>
+      <div class="input-group"> 
+        <div class="input-group-prepend">
+          <span class="input-group-text">@</span>
+        </div>
+          <input type="text" class="form-control" id="username" placeholder="Username" maxlength="50" value="{{username|default_if_none:""}}" name="username">
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" placeholder="Password" maxlength="50" value="{{password|default_if_none:""}}" name="password">
+    </div>
+    <hr class="mb-3">
+    <div class="row">
+      <div class="col-md-6 offset-md-6">
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+        <div class="my-3">
+            <span>Forgot password? <a href="/reset_password">Reset your password</a></span><br>
+            <span>New here? <a href="/signup">Sign up</a></span>
+        </div>
+      </div>
+    </div>
+  </form>
+
+{% endblock %}
+
